@@ -10,23 +10,22 @@ const BundleAnalyzerPlugin = require("webpack-bundle-analyzer")
 
 const vendor = ["babel-polyfill", "firebase", "react", "react-dom", "redux"];
 const extensions = [".ts", ".tsx", ".js", ".jsx", ".css", ".scss", ".json"];
+let plugins = [
+  new webpack.optimize.ModuleConcatenationPlugin(),
+  new webpack.optimize.CommonsChunkPlugin({
+    name: ["vendor", "manifest"]
+  }),
+  new HtmlWebpackPlugin({
+    template: "src/index.htm",
+    chunksSortMode: "dependency"
+  }),
+  new ExtractTextPlugin({
+    filename: "style.[contenthash].css",
+    allChunks: true
+  })
+];
 
 module.exports = (env = {}) => {
-  let plugins = [
-    new webpack.optimize.ModuleConcatenationPlugin(),
-    new webpack.optimize.CommonsChunkPlugin({
-      name: ["vendor", "manifest"]
-    }),
-    new HtmlWebpackPlugin({
-      template: "src/index.htm",
-      chunksSortMode: "dependency"
-    }),
-    new ExtractTextPlugin({
-      filename: "style.[contenthash].css",
-      allChunks: true
-    })
-  ];
-
   if (env.analyze) {
     plugins.push(new BundleAnalyzerPlugin());
   }
