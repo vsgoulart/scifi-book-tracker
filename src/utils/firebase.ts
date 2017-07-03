@@ -1,18 +1,22 @@
 ("use strict");
 
-import { initializeApp, auth } from "firebase/app";
+import { initializeApp, auth, database } from "firebase/app";
+import config from "../config/firebase";
 
-export const init = () => {
-  const config = {
-    apiKey: "AIzaSyDG5fQjQSj0kXL89uAHp05b-PmeXXyvOvQ",
-    authDomain: "sff-book-tracker.firebaseapp.com",
-    databaseURL: "https://sff-book-tracker.firebaseio.com",
-    projectId: "sff-book-tracker",
-    storageBucket: "sff-book-tracker.appspot.com",
-    messagingSenderId: "126633194453"
-  };
+let rootRef: database.Database;
+let authorsRef: database.Reference;
+let awardsRef: database.Reference;
+let booksRef: database.Reference;
 
+export const init = (callback?: Function) => {
   initializeApp(config);
+
+  rootRef = database();
+  authorsRef = database().ref("authors");
+  awardsRef = database().ref("awards");
+  booksRef = database().ref("books");
+
+  callback();
 };
 
 export const listenLogin = (callback: Function) =>
@@ -24,6 +28,12 @@ export const googleLogin = () => {
     console.error(error);
   });
 };
+
+export const listAuthors = () => authorsRef.once("value");
+
+export const listBooks = () => booksRef.once("value");
+
+export const listAwards = () => awardsRef.once("value");
 
 export const logout = () => {
   auth().signOut();

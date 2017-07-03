@@ -4,13 +4,26 @@ import "babel-polyfill";
 import "normalize.css";
 import React from "react";
 import { render } from "react-dom";
-import { init as firebaseInit, listenLogin } from "./utils/firebase";
+import { init as firebaseInit } from "./utils/firebase";
+import { Provider } from "react-redux";
+import createStore from "./stores";
+import { fetchAuthors } from "./actions/authors";
+import { fetchBooks } from "./actions/books";
+import { fetchAwards } from "./actions/awards";
 
 import App from "./components/App";
 
-firebaseInit();
-listenLogin((user: Function) => {
-  console.log(user);
+const store = createStore();
+
+firebaseInit(() => {
+  store.dispatch(fetchAuthors());
+  store.dispatch(fetchBooks());
+  store.dispatch(fetchAwards());
 });
 
-render(<App />, document.getElementById("root"));
+render(
+  <Provider store={store}>
+    <App />
+  </Provider>,
+  document.getElementById("root")
+);
