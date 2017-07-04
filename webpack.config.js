@@ -9,7 +9,7 @@ const BundleAnalyzerPlugin = require("webpack-bundle-analyzer")
   .BundleAnalyzerPlugin;
 
 const vendor = ["babel-polyfill", "firebase", "react", "react-dom", "redux"];
-const extensions = [".ts", ".tsx", ".js", ".jsx", ".css", ".scss", ".json"];
+const extensions = [".js", ".jsx", ".css", ".scss", ".json"];
 let plugins = [
   new webpack.optimize.ModuleConcatenationPlugin(),
   new webpack.optimize.CommonsChunkPlugin({
@@ -32,7 +32,7 @@ module.exports = (env = {}) => {
 
   return {
     entry: {
-      bundle: "./src/index.tsx",
+      bundle: "./src/index.js",
       vendor
     },
     output: {
@@ -44,11 +44,6 @@ module.exports = (env = {}) => {
         {
           use: "babel-loader",
           test: /\.jsx?$/,
-          exclude: /node_modules/
-        },
-        {
-          use: ["babel-loader", "ts-loader"],
-          test: /\.tsx?$/,
           exclude: /node_modules/
         },
         {

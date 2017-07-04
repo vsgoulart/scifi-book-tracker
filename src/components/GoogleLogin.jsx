@@ -1,6 +1,6 @@
-("use strict");
+"use strict";
 
-import React from "react";
+import { createElement } from "react";
 import { googleLogin } from "../utils/firebase";
 
 export default () =>

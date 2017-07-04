@@ -28,13 +28,6 @@
     "rimraf": "^2.6.1"
   },
   "devDependencies": {
-    "@types/firebase": "^2.4.31",
-    "@types/react": "^15.0.30",
-    "@types/react-dom": "^15.5.0",
-    "@types/redux": "^3.6.0",
-    "@types/react-redux": "^4.4.45",
-    "@types/redux-logger": "^3.0.0",
-    "@types/redux-thunk": "^2.1.0",
     "babel-core": "^6.25.0",
     "babel-loader": "^7.1.0",
     "babel-plugin-transform-object-rest-spread": "^6.23.0",
@@ -55,8 +48,6 @@
     "redux-thunk": "^2.2.0",
     "sass-loader": "^6.0.6",
     "style-loader": "^0.18.2",
-    "ts-loader": "^2.2.0",
-    "typescript": "^2.3.4",
     "webpack": "^3.0.0",
     "webpack-bundle-analyzer": "^2.8.2",
     "webpack-dev-server": "^2.5.0"

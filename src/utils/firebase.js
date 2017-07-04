@@ -1,14 +1,14 @@
-("use strict");
+"use strict";
 
 import { initializeApp, auth, database } from "firebase/app";
 import config from "../config/firebase";
 
-let rootRef: database.Database;
-let authorsRef: database.Reference;
-let awardsRef: database.Reference;
-let booksRef: database.Reference;
+let rootRef = null;
+let authorsRef = null;
+let awardsRef = null;
+let booksRef = null;
 
-export const init = (callback?: Function) => {
+export const init = callback => {
   initializeApp(config);
 
   rootRef = database();
@@ -16,15 +16,16 @@ export const init = (callback?: Function) => {
   awardsRef = database().ref("awards");
   booksRef = database().ref("books");
 
-  callback();
+  if (typeof callback != "undefined") {
+    callback();
+  }
 };
 
-export const listenLogin = (callback: Function) =>
-  auth().onAuthStateChanged(callback);
+export const listenLogin = callback => auth().onAuthStateChanged(callback);
 
 export const googleLogin = () => {
   const provider = new auth.GoogleAuthProvider();
-  auth().signInWithPopup(provider).catch((error: Object) => {
+  auth().signInWithPopup(provider).catch(error => {
     console.error(error);
   });
 };
