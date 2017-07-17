@@ -8,7 +8,16 @@ const ExtractTextPlugin = require("extract-text-webpack-plugin");
 const BundleAnalyzerPlugin = require("webpack-bundle-analyzer")
   .BundleAnalyzerPlugin;
 
-const vendor = ["babel-polyfill", "firebase", "react", "react-dom", "redux"];
+const vendor = [
+  "babel-polyfill",
+  "firebase",
+  "react",
+  "react-dom",
+  "redux",
+  "redux-logger",
+  "redux-thunk",
+  "glamorous"
+];
 const extensions = [".js", ".jsx", ".css", ".scss", ".json"];
 let plugins = [
   new webpack.optimize.ModuleConcatenationPlugin(),
@@ -49,15 +58,19 @@ module.exports = (env = {}) => {
         {
           use: ExtractTextPlugin.extract({
             fallback: "style-loader",
-            use: ["css-loader", "sass-loader"]
+            use: ["css-loader", "postcss-loader"]
           }),
-          test: /\.s?css$/
+          test: /\.css$/
         }
       ]
     },
     resolve: {
       extensions
     },
-    plugins
+    plugins,
+    devServer: {
+      port: 8080,
+      historyApiFallback: true
+    }
   };
 };
