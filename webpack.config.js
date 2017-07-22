@@ -16,7 +16,9 @@ const vendor = [
   "redux",
   "redux-logger",
   "redux-thunk",
-  "glamorous"
+  "glamorous",
+  "react-router-dom",
+  "react-redux"
 ];
 const extensions = [".js", ".jsx", ".css", ".scss", ".json"];
 let plugins = [
@@ -33,10 +35,15 @@ let plugins = [
     allChunks: true
   })
 ];
+let devtool = "eval-source-map";
 
 module.exports = (env = {}) => {
   if (env.analyze) {
     plugins.push(new BundleAnalyzerPlugin());
+  }
+
+  if (env.prod) {
+    devtool = "source-map";
   }
 
   return {
@@ -48,6 +55,7 @@ module.exports = (env = {}) => {
       path: path.join(__dirname, "dist"),
       filename: "[name].[chunkhash].js"
     },
+    devtool,
     module: {
       rules: [
         {
